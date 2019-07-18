@@ -12,17 +12,17 @@ from vk_bot import VkBot
 
 def white_bg_square(img, message):
     "return a white-background-color image having the img in exact center"
-    size = (max(img.size), int(max(img.size) * 0.8))
+    size = (int(max(img.size)*1.3), int(max(img.size)))
     print(type(size[0]))
     layer = Image.new('RGB', size, (255,255,255))
     draw = ImageDraw.Draw(layer)
-    font = ImageFont.truetype("fonts/times.ttf", 100)
+    font = ImageFont.truetype("fonts/times.ttf", 140)
 
     text_x = int(size[0]/4)
-    text_y = 100
+    text_y = 200
     draw.text((text_x, text_y), message, (0,0,0), font=font)
 
-    size_int = tuple((int((size[0] - img.size[0])/2), int(size[1] - img.size[1])))
+    size_int = tuple((int((size[0] - img.size[0])/4), int(size[1] - img.size[1])))
     layer.paste(img, size_int)
     return layer
 
