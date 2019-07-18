@@ -1,0 +1,8 @@
+# API Key
+key.py
+
+# Python cache files
+__pycache__
+
+# OS X files
+.DS_Store
