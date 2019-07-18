@@ -1,6 +1,9 @@
 # API Key
 key.py
 
+# Result image
+img/result.jpg
+
 # Python cache files
 __pycache__
 

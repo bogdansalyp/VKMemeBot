@@ -24,7 +24,8 @@ def white_bg_square(img, message):
 
     size_int = tuple((int((size[0] - img.size[0])/4), int(size[1] - img.size[1])))
     layer.paste(img, size_int)
-    return layer
+    wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
+    return wert
 
 def write_msg(user_id, message):
     img = Image.open('img/ok.jpg')
