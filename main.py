@@ -436,7 +436,25 @@ def write_msg(user_id, message, image_path):
 
     # Send a message with photo
     result = vk.method('photos.saveMessagesPhoto', {'server': json_data['server'], 'photo': json_data['photo'], 'hash': json_data['hash']})
-    vk.method('messages.send', {'user_id': user_id, 'message': '', 'attachment': 'photo{}_{}'.format(result[0]['owner_id'], result[0]['id']), 'random_id': random.randint(1, 9999)})
+    
+    buttons = {}
+    buttons['one_time'] = False
+    buttons['buttons'] = []
+    buttons['buttons'].append([])
+    buttons['buttons'][0].append({})
+    buttons['buttons'][0][0]['action'] = {}
+    buttons['buttons'][0][0]['action']['type'] = 'text'
+    buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
+    buttons['buttons'][0][0]['action']['label'] = 'Анекдот'
+    # buttons['buttons'][0][0]['color'] = 'negative'
+
+    button_json = json.dumps(buttons)
+    vk.method('messages.send', {
+        'user_id': user_id, 
+        'message': '', 
+        'attachment': 'photo{}_{}'.format(result[0]['owner_id'], result[0]['id']), 'random_id': random.randint(1, 9999),
+        'keyboard': button_json
+    })
 
 
 # API-ключ созданный ранее
