@@ -4,6 +4,7 @@ import random
 from vk_api.longpoll import VkLongPoll, VkEventType
 import requests
 import json
+import random
 from PIL import Image, ImageFont, ImageDraw
 
 FONT = 'fonts/arial.ttf'
@@ -244,16 +245,19 @@ vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 
 def handle_msg(message):
-    if message.startswith("1"):
+    if message.startswith('1'):
         image_path = handle_ok(event.text.split(' ', 1)[1])
-    elif message.startswith("2"):
+    elif message.startswith('2'):
         image_path = handle_poker_face(event.text.split(' ', 1)[1])
-    elif message.startswith("3"):
+    elif message.startswith('3'):
         image_path = handle_poker_face_2(event.text.split(' ', 1)[1])
-    elif message.startswith("4"):
+    elif message.startswith('4'):
         image_path = handle_poker_face_3(event.text.split(' ', 1)[1])
-    elif message.startswith("5"):
+    elif message.startswith('5'):
         image_path = handle_me_only(event.text.split(' ', 1)[1])
+    elif message.startswith('0'):
+        message = str(random.randint(1, 5)) + message[1:]
+        message, image_path = handle_msg(message)
     else:
         image_path = handle_ok("начни сообщение с цифры до 5")
     return message, image_path
