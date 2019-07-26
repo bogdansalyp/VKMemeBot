@@ -467,7 +467,9 @@ vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 
 def handle_msg(message):
-    if message.startswith('1'):
+    if len(message) == 1 or len(message) == 2:
+        image_path = handle_ok("начни сообщение с цифры до 5")
+    elif message.startswith('1'):
         image_path = handle_ok(event.text.split(' ', 1)[1])
     elif message.startswith('2'):
         image_path = handle_poker_face(event.text.split(' ', 1)[1])
