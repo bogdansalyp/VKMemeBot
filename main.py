@@ -6,9 +6,6 @@ import requests
 import json
 from PIL import Image, ImageFont, ImageDraw
 
-# --
-from vk_bot import VkBot
-# --
 
 def white_bg_square(img, message):
     "return a white-background-color image having the img in exact center"
@@ -27,9 +24,10 @@ def white_bg_square(img, message):
     wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
     return wert
 
-def write_msg(user_id, message):
+
+def write_msg(user_id, output):
     img = Image.open('img/ok.jpg')
-    square_one = white_bg_square(img, message)
+    square_one = white_bg_square(img, output['text'])
     square_one.resize((100, 100), Image.ANTIALIAS)
     square_one.save('img/result.jpg')
 
@@ -50,6 +48,9 @@ vk = vk_api.VkApi(token=token)
 # Работа с сообщениями
 longpoll = VkLongPoll(vk)
 
+def handle_msg(message):
+    return {'text': message}
+
 print("Server started")
 for event in longpoll.listen():
 
@@ -60,7 +61,6 @@ for event in longpoll.listen():
             print('New message:')
             print(f'For me by: {event.user_id}', end='')
 
-            bot = VkBot(event.user_id)
-            write_msg(event.user_id, bot.new_message(event.text))
+            write_msg(event.user_id, handle_msg(event.text))
 
             print('Text: ', event.text)
