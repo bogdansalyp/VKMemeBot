@@ -5,6 +5,8 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 import requests
 import json
 import random
+import numpy as np
+import pandas as pd
 from PIL import Image, ImageFont, ImageDraw
 
 FONT = 'fonts/arial.ttf'
@@ -258,6 +260,10 @@ def handle_msg(message):
     elif message.startswith('0'):
         message = str(random.randint(1, 5)) + message[1:]
         message, image_path = handle_msg(message)
+    elif message.lower() =='анекдот' or message.lower() == 'анек':
+        data = pd.read_csv('data/anekdot_ru.csv')
+        message = np.random.choice(data['text'])
+        image_path = handle_ok(message)
     else:
         image_path = handle_ok("начни сообщение с цифры до 5")
     return message, image_path
