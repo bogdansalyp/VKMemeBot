@@ -16,23 +16,77 @@ def handle_ok(message):
 
     # Rescale the image
     whitespace_x = int(original_img.size[0] * 1.3)
-    whitespace_y = int(original_img.size[0])
+    whitespace_y = int(original_img.size[0] * 0.9)
     whitespace_size = (whitespace_x, whitespace_y)
     new_image = Image.new('RGB', whitespace_size, (255,255,255))
     
     # Position new image
-    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 4)
+    new_position_x = -150
     new_position_y = int(whitespace_size[1] - original_img.size[1])
     new_position = (new_position_x, new_position_y)
     new_image.paste(original_img, new_position)
     
     # Add text
-    font = ImageFont.truetype(FONT, 140)
-    text_position_x = int(whitespace_size[0] / 4)
-    text_position_y = 200
-    text_position = (text_position_x, text_position_y)
     draw = ImageDraw.Draw(new_image)
-    draw.text(text_position, message, (0,0,0), font=font)
+
+    text_position_x = int(whitespace_size[0] / 2)
+    text_position_y = 200
+
+    margin = whitespace_x / 20
+    
+    
+    text_written = False
+    for font_size in [220, 200, 180, 150, 130, 100]:
+        font = ImageFont.truetype(FONT, font_size)
+        font_width = font.getsize(message)[0]
+        available_width = text_position_x - margin
+        if ((font_width < available_width) and not (text_written)):
+            draw.text((text_position_x, text_position_y), message, (0,0,0), font=font)
+            text_written = True
+            
+    if not text_written:
+        text_position_y = 200
+        font = ImageFont.truetype(FONT, 100)
+
+        font = ImageFont.truetype(FONT, font_size)
+        font_width = font.getsize(message)[0]
+        text_position_x = int(whitespace_size[0] / 3)
+        available_width = whitespace_x - (text_position_x + margin)
+        symbols_to_fit = 100
+        while(font.getsize('a'*symbols_to_fit)[0] > available_width):
+            symbols_to_fit -= 1
+
+        new_lines = []
+        current_word = ''
+        for ix, word in enumerate(message.replace('\n',' ').split(' ')):
+            if len(current_word) + len(word) < symbols_to_fit:
+                if ix != 0:
+                    current_word = current_word + ' ' + word
+                else:
+                    current_word = word
+            else:
+                new_lines.append(current_word)
+                current_word = word
+        new_lines.append(current_word)
+        # Resize image
+        for line in new_lines:
+        # for line n [message[i:i+symbols_to_fit] for i in range(0, len(message), symbols_to_fit)]:
+            whitespace_y += font.getsize('A')[1]
+            new_position_y += font.getsize('A')[1]
+        whitespace_y -= font.getsize('A')[1]
+        new_position_y -= font.getsize('A')[1]
+
+        whitespace_size = (whitespace_x, whitespace_y)
+        new_image = Image.new('RGB', whitespace_size, (255,255,255))
+        new_position = (new_position_x, new_position_y)
+        new_image.paste(original_img, new_position)
+        draw = ImageDraw.Draw(new_image)
+
+        # Write multiline
+        for line in new_lines:
+        # for line in [message[i:i+symbols_to_fit] for i in range(0, len(message), symbols_to_fit)]:
+            draw.text((text_position_x, text_position_y), line, (0,0,0), font=font)
+            text_position_y += font.getsize('A')[1]
 
     # Resize an image
     wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
