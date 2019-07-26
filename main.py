@@ -104,7 +104,7 @@ def handle_ok(message):
             text_position_y += font.getsize('A')[1]
 
     # Watermark
-    draw_watermark(new_image, 'vk.com/ultimate_meme_bot')
+    draw_watermark(new_image, 'vk.com/postironic_bot')
     
     # Resize an image
     wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
@@ -182,7 +182,7 @@ def handle_poker_face(message):
             text_position_y += font.getsize('A')[1]
 
     # Watermark
-    draw_watermark(new_image, 'vk.com/ultimate_meme_bot')
+    draw_watermark(new_image, 'vk.com/postironic_bot')
 
     # Resize an image
     wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
@@ -260,7 +260,7 @@ def handle_poker_face_2(message):
             text_position_y += font.getsize('A')[1]
 
     # Watermark
-    draw_watermark(new_image, 'vk.com/ultimate_meme_bot')
+    draw_watermark(new_image, 'vk.com/postironic_bot')
 
     # Resize an image
     wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
@@ -339,7 +339,7 @@ def handle_poker_face_3(message):
             text_position_y += font.getsize('A')[1]
 
     # Watermark
-    draw_watermark(new_image, 'vk.com/ultimate_meme_bot')
+    draw_watermark(new_image, 'vk.com/postironic_bot')
 
     # Resize an image
     wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
@@ -418,7 +418,7 @@ def handle_me_only(message):
             text_position_y += font.getsize('A')[1]
 
     # Watermark
-    draw_watermark(new_image, 'vk.com/ultimate_meme_bot')
+    draw_watermark(new_image, 'vk.com/postironic_bot')
     
     # Resize an image
     wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
