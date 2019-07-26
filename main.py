@@ -7,115 +7,161 @@ import json
 from PIL import Image, ImageFont, ImageDraw
 
 FONT = 'fonts/arial.ttf'
+RESULT_IMAGE_PATH = 'img/result.jpg'
 
 
 def handle_ok(message):
     original_image_path = 'img/ok.jpg'
-    result_image_path = 'img/result.jpg'
+    original_img = Image.open(original_image_path)
 
-    img = Image.open(original_image_path)
-    size = (int(max(img.size)*1.3), int(max(img.size)))
-    layer = Image.new('RGB', size, (255,255,255))
-    draw = ImageDraw.Draw(layer)
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 1.3)
+    whitespace_y = int(original_img.size[0])
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 4)
+    new_position_y = int(whitespace_size[1] - original_img.size[1])
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
     font = ImageFont.truetype(FONT, 140)
+    text_position_x = int(whitespace_size[0] / 4)
+    text_position_y = 200
+    text_position = (text_position_x, text_position_y)
+    draw = ImageDraw.Draw(new_image)
+    draw.text(text_position, message, (0,0,0), font=font)
 
-    text_x = int(size[0]/4)
-    text_y = 200
-    draw.text((text_x, text_y), message, (0,0,0), font=font)
-
-    size_int = tuple((int((size[0] - img.size[0])/4), int(size[1] - img.size[1])))
-    layer.paste(img, size_int)
-    wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
     wert.resize((100, 100), Image.ANTIALIAS)
-    wert.save(result_image_path)
-    return result_image_path
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
 
 
 def handle_poker_face(message):
     original_image_path = 'img/poker_face.jpg'
-    result_image_path = 'img/result.jpg'
+    original_img = Image.open(original_image_path)
 
-    img = Image.open(original_image_path)
-    size = (int(img.size[0]*1.6), int(img.size[1] * 1.3))
-    layer = Image.new('RGB', size, (255,255,255))
-    draw = ImageDraw.Draw(layer)
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 1.6)
+    whitespace_y = int(original_img.size[1] * 1.3)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = int((whitespace_size[1] - original_img.size[1]) * 1.2)
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
     font = ImageFont.truetype(FONT, 140)
+    text_position_x = int(whitespace_size[0] / 4)
+    text_position_y = int(whitespace_size[0] / 7)
+    text_position = (text_position_x, text_position_y)
+    draw = ImageDraw.Draw(new_image)
+    draw.text(text_position, message, (0,0,0), font=font)
 
-    text_x = int(size[0]/4)
-    text_y = int(size[1]/7)
-    draw.text((text_x, text_y), message, (0,0,0), font=font)
-
-    size_int = tuple((int((size[0] - img.size[0])/2.5), int((size[1] - img.size[1]) * 1.2)))
-    layer.paste(img, size_int)
-    wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
     wert.resize((100, 100), Image.ANTIALIAS)
-    wert.save(result_image_path)
-    return result_image_path
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
 
 def handle_poker_face_2(message):
     original_image_path = 'img/poker_face_2.jpg'
-    result_image_path = 'img/result.jpg'
+    original_img = Image.open(original_image_path)
 
-    img = Image.open(original_image_path)
-    size = (int(img.size[0] * 2.6), int(img.size[1] * 1.3))
-    layer = Image.new('RGB', size, (255,255,255))
-    draw = ImageDraw.Draw(layer)
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 2.6)
+    whitespace_y = int(original_img.size[1] * 1.3)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = int((whitespace_size[1] - original_img.size[1]) * 1.2)
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
     font = ImageFont.truetype(FONT, 80)
+    text_position_x = int(whitespace_size[0] / 4)
+    text_position_y = int(whitespace_size[0] / 7)
+    text_position = (text_position_x, text_position_y)
+    draw = ImageDraw.Draw(new_image)
+    draw.text(text_position, message, (0,0,0), font=font)
 
-    text_x = int(size[0]/4)
-    text_y = int(size[1]/7)
-    draw.text((text_x, text_y), message, (0,0,0), font=font)
-
-    size_int = tuple((int((size[0] - img.size[0])/2.5), int((size[1] - img.size[1]) * 1.2)))
-    layer.paste(img, size_int)
-    wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
     wert.resize((100, 100), Image.ANTIALIAS)
-    wert.save(result_image_path)
-    return result_image_path
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
 
 
 def handle_poker_face_3(message):
     original_image_path = 'img/poker_face_3.png'
-    result_image_path = 'img/result.jpg'
+    original_img = Image.open(original_image_path)
 
-    img = Image.open(original_image_path)
-    size = (int(img.size[0] * 2.6), int(img.size[1] * 1.5))
-    layer = Image.new('RGB', size, (255,255,255))
-    draw = ImageDraw.Draw(layer)
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 2.6)
+    whitespace_y = int(original_img.size[1] * 1.5)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = int((whitespace_size[1] - original_img.size[1]) * 1.2)
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
     font = ImageFont.truetype(FONT, 80)
+    text_position_x = int(whitespace_size[0] / 4)
+    text_position_y = int(whitespace_size[1] / 7)
+    text_position = (text_position_x, text_position_y)
+    draw = ImageDraw.Draw(new_image)
+    draw.text(text_position, message, (0,0,0), font=font)
 
-    text_x = int(size[0]/4)
-    text_y = int(size[1]/7)
-    draw.text((text_x, text_y), message, (0,0,0), font=font)
-
-    size_int = tuple((int((size[0] - img.size[0])/2.5), int((size[1] - img.size[1]) * 1.2)))
-    layer.paste(img, size_int)
-    wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
     wert.resize((100, 100), Image.ANTIALIAS)
-    wert.save(result_image_path)
-    return result_image_path
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
 
 
 def handle_me_only(message):
     original_image_path = 'img/me_only.jpg'
-    result_image_path = 'img/result.jpg'
+    original_img = Image.open(original_image_path)
 
-    img = Image.open(original_image_path)
-    size = (int(img.size[0] * 5), int(img.size[1] * 1.5))
-    layer = Image.new('RGB', size, (255,255,255))
-    draw = ImageDraw.Draw(layer)
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 5)
+    whitespace_y = int(original_img.size[1] * 1.5)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = int((whitespace_size[1] - original_img.size[1]) * 1.2)
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
     font = ImageFont.truetype(FONT, 80)
+    text_position_x = int(whitespace_size[0] / 4)
+    text_position_y = int(whitespace_size[1] / 7)
+    text_position = (text_position_x, text_position_y)
+    draw = ImageDraw.Draw(new_image)
+    draw.text(text_position, message, (0,0,0), font=font)
 
-    text_x = int(size[0]/4)
-    text_y = int(size[1]/7)
-    draw.text((text_x, text_y), message, (0,0,0), font=font)
-
-    size_int = tuple((int((size[0] - img.size[0])/2.5), int((size[1] - img.size[1]) * 1.2)))
-    layer.paste(img, size_int)
-    wert = layer.resize((int(size[0]/4), int(size[1]/4)), Image.ANTIALIAS)
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
     wert.resize((100, 100), Image.ANTIALIAS)
-    wert.save(result_image_path)
-    return result_image_path
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
 
 
 def write_msg(user_id, message, image_path):
