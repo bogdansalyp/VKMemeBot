@@ -10,6 +10,22 @@ FONT = 'fonts/arial.ttf'
 RESULT_IMAGE_PATH = 'img/result.jpg'
 
 
+def split_to_lines(message, symbols_to_fit):
+    new_lines = []
+    current_word = ''
+    for ix, word in enumerate(message.replace('\n',' ').split(' ')):
+        if len(current_word) + len(word) < symbols_to_fit:
+            if ix != 0:
+                current_word = current_word + ' ' + word
+            else:
+                current_word = word
+        else:
+            new_lines.append(current_word)
+            current_word = word
+    new_lines.append(current_word)
+    return new_lines
+
+
 def handle_ok(message):
     original_image_path = 'img/ok.jpg'
     original_img = Image.open(original_image_path)
@@ -56,21 +72,10 @@ def handle_ok(message):
         while(font.getsize('a'*symbols_to_fit)[0] > available_width):
             symbols_to_fit -= 1
 
-        new_lines = []
-        current_word = ''
-        for ix, word in enumerate(message.replace('\n',' ').split(' ')):
-            if len(current_word) + len(word) < symbols_to_fit:
-                if ix != 0:
-                    current_word = current_word + ' ' + word
-                else:
-                    current_word = word
-            else:
-                new_lines.append(current_word)
-                current_word = word
-        new_lines.append(current_word)
+        new_lines = split_to_lines(message, symbols_to_fit)
+
         # Resize image
         for line in new_lines:
-        # for line n [message[i:i+symbols_to_fit] for i in range(0, len(message), symbols_to_fit)]:
             whitespace_y += font.getsize('A')[1]
             new_position_y += font.getsize('A')[1]
         whitespace_y -= font.getsize('A')[1]
@@ -84,7 +89,6 @@ def handle_ok(message):
 
         # Write multiline
         for line in new_lines:
-        # for line in [message[i:i+symbols_to_fit] for i in range(0, len(message), symbols_to_fit)]:
             draw.text((text_position_x, text_position_y), line, (0,0,0), font=font)
             text_position_y += font.getsize('A')[1]
 
