@@ -6,6 +6,8 @@ import requests
 import json
 from PIL import Image, ImageFont, ImageDraw
 
+FONT = 'fonts/arial.ttf'
+
 
 def handle_ok(message):
     original_image_path = 'img/ok.jpg'
@@ -15,7 +17,7 @@ def handle_ok(message):
     size = (int(max(img.size)*1.3), int(max(img.size)))
     layer = Image.new('RGB', size, (255,255,255))
     draw = ImageDraw.Draw(layer)
-    font = ImageFont.truetype("fonts/times.ttf", 140)
+    font = ImageFont.truetype(FONT, 140)
 
     text_x = int(size[0]/4)
     text_y = 200
@@ -37,7 +39,7 @@ def handle_poker_face(message):
     size = (int(img.size[0]*1.6), int(img.size[1] * 1.3))
     layer = Image.new('RGB', size, (255,255,255))
     draw = ImageDraw.Draw(layer)
-    font = ImageFont.truetype("fonts/times.ttf", 140)
+    font = ImageFont.truetype(FONT, 140)
 
     text_x = int(size[0]/4)
     text_y = int(size[1]/7)
@@ -58,7 +60,7 @@ def handle_poker_face_2(message):
     size = (int(img.size[0] * 2.6), int(img.size[1] * 1.3))
     layer = Image.new('RGB', size, (255,255,255))
     draw = ImageDraw.Draw(layer)
-    font = ImageFont.truetype("fonts/times.ttf", 80)
+    font = ImageFont.truetype(FONT, 80)
 
     text_x = int(size[0]/4)
     text_y = int(size[1]/7)
@@ -80,7 +82,7 @@ def handle_poker_face_3(message):
     size = (int(img.size[0] * 2.6), int(img.size[1] * 1.5))
     layer = Image.new('RGB', size, (255,255,255))
     draw = ImageDraw.Draw(layer)
-    font = ImageFont.truetype("fonts/times.ttf", 80)
+    font = ImageFont.truetype(FONT, 80)
 
     text_x = int(size[0]/4)
     text_y = int(size[1]/7)
@@ -102,7 +104,7 @@ def handle_me_only(message):
     size = (int(img.size[0] * 5), int(img.size[1] * 1.5))
     layer = Image.new('RGB', size, (255,255,255))
     draw = ImageDraw.Draw(layer)
-    font = ImageFont.truetype("fonts/times.ttf", 80)
+    font = ImageFont.truetype(FONT, 80)
 
     text_x = int(size[0]/4)
     text_y = int(size[1]/7)
