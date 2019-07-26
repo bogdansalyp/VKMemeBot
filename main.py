@@ -148,6 +148,8 @@ def handle_msg(message):
         image_path = handle_poker_face_3(event.text.split(' ', 1)[1])
     elif message.startswith("5"):
         image_path = handle_me_only(event.text.split(' ', 1)[1])
+    else:
+        image_path = handle_ok("начни сообщение с цифры до 5")
     return message, image_path
 
 print("Server started")
