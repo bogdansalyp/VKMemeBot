@@ -7,6 +7,7 @@ import json
 import random
 import numpy as np
 import pandas as pd
+import redis
 from PIL import Image, ImageFont, ImageDraw
 
 FONT = 'fonts/arial.ttf'
@@ -438,22 +439,125 @@ def write_msg(user_id, message, image_path):
     result = vk.method('photos.saveMessagesPhoto', {'server': json_data['server'], 'photo': json_data['photo'], 'hash': json_data['hash']})
     
     buttons = {}
-    buttons['one_time'] = False
+    buttons['one_time'] = True
     buttons['buttons'] = []
     buttons['buttons'].append([])
     buttons['buttons'][0].append({})
     buttons['buttons'][0][0]['action'] = {}
     buttons['buttons'][0][0]['action']['type'] = 'text'
     buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
-    buttons['buttons'][0][0]['action']['label'] = 'Анекдот'
-    # buttons['buttons'][0][0]['color'] = 'negative'
+    buttons['buttons'][0][0]['action']['label'] = 'Создать картинку'
+    buttons['buttons'][0][0]['color'] = 'negative'
+    buttons['buttons'].append([])
+    buttons['buttons'][1].append({})
+    buttons['buttons'][1][0]['action'] = {}
+    buttons['buttons'][1][0]['action']['type'] = 'text'
+    buttons['buttons'][1][0]['action']['payload'] = "{\"button\": \"1\"}"
+    buttons['buttons'][1][0]['action']['label'] = 'Анекдот'
+
+    button_json = json.dumps(buttons)
 
     button_json = json.dumps(buttons)
     vk.method('messages.send', {
         'user_id': user_id, 
         'message': '', 
-        'attachment': 'photo{}_{}'.format(result[0]['owner_id'], result[0]['id']), 'random_id': random.randint(1, 9999),
-        'keyboard': button_json
+        'attachment': 'photo{}_{}'.format(result[0]['owner_id'], result[0]['id']), 
+        'keyboard': button_json,
+        'random_id': random.randint(1, 9999)
+    })
+
+
+def write_hello_msg(user_id):
+    buttons = {}
+    buttons['one_time'] = True
+    buttons['buttons'] = []
+    buttons['buttons'].append([])
+    buttons['buttons'][0].append({})
+    buttons['buttons'][0][0]['action'] = {}
+    buttons['buttons'][0][0]['action']['type'] = 'text'
+    buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
+    buttons['buttons'][0][0]['action']['label'] = 'Создать картинку'
+    buttons['buttons'][0][0]['color'] = 'negative'
+    buttons['buttons'].append([])
+    buttons['buttons'][1].append({})
+    buttons['buttons'][1][0]['action'] = {}
+    buttons['buttons'][1][0]['action']['type'] = 'text'
+    buttons['buttons'][1][0]['action']['payload'] = "{\"button\": \"1\"}"
+    buttons['buttons'][1][0]['action']['label'] = 'Анекдот'
+
+    button_json = json.dumps(buttons)
+
+    vk.method('messages.send', {
+        'user_id': user_id, 
+        'message': 'Привет',
+        'keyboard': button_json,
+        'random_id': random.randint(1, 9999)
+    })
+
+
+def show_numbers(user_id):
+    buttons = {}
+    buttons['one_time'] = True
+    buttons['buttons'] = []
+    buttons['buttons'].append([])
+    buttons['buttons'][0].append({})
+    buttons['buttons'][0][0]['action'] = {}
+    buttons['buttons'][0][0]['action']['type'] = 'text'
+    buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
+    buttons['buttons'][0][0]['action']['label'] = '1'
+    buttons['buttons'][0][0]['color'] = 'negative'
+
+    buttons['buttons'][0].append({})
+    buttons['buttons'][0][1]['action'] = {}
+    buttons['buttons'][0][1]['action']['type'] = 'text'
+    buttons['buttons'][0][1]['action']['payload'] = "{\"button\": \"2\"}"
+    buttons['buttons'][0][1]['action']['label'] = '2'
+    buttons['buttons'][0][1]['color'] = 'negative'
+
+    buttons['buttons'][0].append({})
+    buttons['buttons'][0][2]['action'] = {}
+    buttons['buttons'][0][2]['action']['type'] = 'text'
+    buttons['buttons'][0][2]['action']['payload'] = "{\"button\": \"3\"}"
+    buttons['buttons'][0][2]['action']['label'] = '3'
+    buttons['buttons'][0][2]['color'] = 'negative'
+
+    buttons['buttons'].append([])
+    buttons['buttons'][1].append({})
+    buttons['buttons'][1][0]['action'] = {}
+    buttons['buttons'][1][0]['action']['type'] = 'text'
+    buttons['buttons'][1][0]['action']['payload'] = "{\"button\": \"3\"}"
+    buttons['buttons'][1][0]['action']['label'] = '4'
+    buttons['buttons'][1][0]['color'] = 'negative'
+
+    buttons['buttons'][1].append({})
+    buttons['buttons'][1][1]['action'] = {}
+    buttons['buttons'][1][1]['action']['type'] = 'text'
+    buttons['buttons'][1][1]['action']['payload'] = "{\"button\": \"3\"}"
+    buttons['buttons'][1][1]['action']['label'] = '5'
+    buttons['buttons'][1][1]['color'] = 'negative'  
+
+    buttons['buttons'][1].append({})
+    buttons['buttons'][1][2]['action'] = {}
+    buttons['buttons'][1][2]['action']['type'] = 'text'
+    buttons['buttons'][1][2]['action']['payload'] = "{\"button\": \"3\"}"
+    buttons['buttons'][1][2]['action']['label'] = '0'
+
+    button_json = json.dumps(buttons)
+
+    vk.method('messages.send', {
+        'user_id': user_id, 
+        'message': 'Выбери номер картинки',
+        'keyboard': button_json,
+        'random_id': random.randint(1, 9999)
+    })
+
+
+def write_prompt_select_text(user_id):
+    vk.method('messages.send', {
+        'user_id': user_id, 
+        'message': 'Теперь пиши свою фразу:',
+        'keyboard': json.dumps({}),
+        'random_id': random.randint(1, 9999)
     })
 
 
@@ -466,22 +570,21 @@ vk = vk_api.VkApi(token=token)
 # Работа с сообщениями
 longpoll = VkLongPoll(vk)
 
-def handle_msg(message):
-    if len(message) == 1 or len(message) == 2:
-        image_path = handle_ok("начни сообщение с цифры до 5")
-    elif message.startswith('1'):
-        image_path = handle_ok(event.text.split(' ', 1)[1])
-    elif message.startswith('2'):
-        image_path = handle_poker_face(event.text.split(' ', 1)[1])
-    elif message.startswith('3'):
-        image_path = handle_poker_face_2(event.text.split(' ', 1)[1])
-    elif message.startswith('4'):
-        image_path = handle_poker_face_3(event.text.split(' ', 1)[1])
-    elif message.startswith('5'):
-        image_path = handle_me_only(event.text.split(' ', 1)[1])
-    elif message.startswith('0'):
-        message = str(random.randint(1, 5)) + message[1:]
-        message, image_path = handle_msg(message)
+def handle_msg(message, number=None):
+    if number == 0:
+        number = random.randint(1, 5)
+
+    # Select a handler
+    if number == 1:
+        image_path = handle_ok(message)
+    elif number == 2:
+        image_path = handle_poker_face(message)
+    elif number == 3:
+        image_path = handle_poker_face_2(message)
+    elif number == 4:
+        image_path = handle_poker_face_3(message)
+    elif number == 5:
+        image_path = handle_me_only(message)
     elif message.lower() =='анекдот' or message.lower() == 'анек':
         data = pd.read_csv('data/anekdot_ru.csv')
         message = np.random.choice(data['text'])
@@ -491,6 +594,10 @@ def handle_msg(message):
     return message, image_path
 
 print("Server started")
+
+# Set up database
+r = redis.Redis(host='localhost', port=6379, db=0)
+
 for event in longpoll.listen():
 
     if event.type == VkEventType.MESSAGE_NEW:
@@ -500,10 +607,32 @@ for event in longpoll.listen():
             print('New message:')
             print(f'For me by: {event.user_id}')
 
-            # Generate a text and image
-            answer, image_path = handle_msg(event.text)
+            user_status = r.get(event.user_id)
+            print(user_status)
 
-            # Send a message back
-            write_msg(event.user_id, answer, image_path)
+            if user_status == None and event.text == 'Создать картинку':
+                # Show first message
+                show_numbers(event.user_id)
+                r.set(event.user_id, 'choosing numbers')
+                print('Create a picture branch')
+            elif user_status == None and event.text == 'Анекдот':
+                answer, image_path = handle_msg(event.text)
+                write_msg(event.user_id, answer, image_path)
+                r.delete(event.user_id)
+            elif user_status == b'choosing numbers':
+                print('Choosing numbers branch')
+                write_prompt_select_text(event.user_id)
+                r.set(event.user_id, 'writing a message')
+                r.set(str(event.user_id) + 'number', int(event.text))
+            elif user_status == b'writing a message':
+                number = int(r.get(str(event.user_id) + 'number'))
+                # Generate a text and image
+                answer, image_path = handle_msg(event.text, number)
+                r.delete(event.user_id)
+                # Send a message back
+                write_msg(event.user_id, answer, image_path)
+            else:
+                write_hello_msg(event.user_id)
+                r.delete(event.user_id)
 
             print('Text: ', event.text)
