@@ -498,49 +498,59 @@ def write_hello_msg(user_id):
 def show_numbers(user_id):
     buttons = {}
     buttons['one_time'] = True
-    buttons['buttons'] = []
-    buttons['buttons'].append([])
-    buttons['buttons'][0].append({})
-    buttons['buttons'][0][0]['action'] = {}
-    buttons['buttons'][0][0]['action']['type'] = 'text'
-    buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
-    buttons['buttons'][0][0]['action']['label'] = '1'
-    buttons['buttons'][0][0]['color'] = 'negative'
-
-    buttons['buttons'][0].append({})
-    buttons['buttons'][0][1]['action'] = {}
-    buttons['buttons'][0][1]['action']['type'] = 'text'
-    buttons['buttons'][0][1]['action']['payload'] = "{\"button\": \"2\"}"
-    buttons['buttons'][0][1]['action']['label'] = '2'
-    buttons['buttons'][0][1]['color'] = 'negative'
-
-    buttons['buttons'][0].append({})
-    buttons['buttons'][0][2]['action'] = {}
-    buttons['buttons'][0][2]['action']['type'] = 'text'
-    buttons['buttons'][0][2]['action']['payload'] = "{\"button\": \"3\"}"
-    buttons['buttons'][0][2]['action']['label'] = '3'
-    buttons['buttons'][0][2]['color'] = 'negative'
-
-    buttons['buttons'].append([])
-    buttons['buttons'][1].append({})
-    buttons['buttons'][1][0]['action'] = {}
-    buttons['buttons'][1][0]['action']['type'] = 'text'
-    buttons['buttons'][1][0]['action']['payload'] = "{\"button\": \"3\"}"
-    buttons['buttons'][1][0]['action']['label'] = '4'
-    buttons['buttons'][1][0]['color'] = 'negative'
-
-    buttons['buttons'][1].append({})
-    buttons['buttons'][1][1]['action'] = {}
-    buttons['buttons'][1][1]['action']['type'] = 'text'
-    buttons['buttons'][1][1]['action']['payload'] = "{\"button\": \"3\"}"
-    buttons['buttons'][1][1]['action']['label'] = '5'
-    buttons['buttons'][1][1]['color'] = 'negative'  
-
-    buttons['buttons'][1].append({})
-    buttons['buttons'][1][2]['action'] = {}
-    buttons['buttons'][1][2]['action']['type'] = 'text'
-    buttons['buttons'][1][2]['action']['payload'] = "{\"button\": \"3\"}"
-    buttons['buttons'][1][2]['action']['label'] = '0'
+    buttons['buttons'] = [
+        [
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': '1'
+                },
+                'color': 'negative'
+            },
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': '2'
+                },
+                'color': 'negative'
+            },
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': '3'
+                },
+                'color': 'negative'
+            }
+        ],
+        [
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': '4'
+                },
+                'color': 'negative'
+            },
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': '5'
+                },
+                'color': 'negative'
+            },
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': '0'
+                }
+            }
+        ]
+    ]
 
     button_json = json.dumps(buttons)
 
