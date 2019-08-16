@@ -13,6 +13,7 @@ from handle_images import handle_ok, handle_poker_face, handle_poker_face_2, han
 
 FONT = 'fonts/arial.ttf'
 RESULT_IMAGE_PATH = 'img/result.jpg'
+AVAILABLE_TEMPLATES = ["cool ok", "poker face", "poker face 2", "really", "hmmmm"]
 
 
 def write_msg(user_id, message, image_path):
@@ -207,29 +208,43 @@ for event in longpoll.listen():
             user_status = r.get(event.user_id)
             print(user_status)
 
-            if user_status == None and event.text == 'Создать картинку':
-                # Show first message
-                show_numbers(event.user_id)
-                r.set(event.user_id, 'choosing numbers')
-                print('Create a picture branch')
-            elif user_status == None and event.text == 'Анекдот':
-                answer, image_path = handle_msg(event.text)
-                write_msg(event.user_id, answer, image_path)
-                r.delete(event.user_id)
+            # User just opened chat
+            if user_status == None:
+                if event.text == 'Создать картинку':
+                    # Show first message
+                    show_numbers(event.user_id)
+                    r.set(event.user_id, 'choosing numbers')
+                    print('Create a picture branch')
+                elif event.text == 'Анекдот':
+                    answer, image_path = handle_msg(event.text)
+                    write_msg(event.user_id, answer, image_path)
+                    r.delete(event.user_id)
+                else:
+                    write_hello_msg(event.user_id)
+                    r.delete(event.user_id)
+            
+            # User decided to choose a meme template
             elif user_status == b'choosing numbers':
-                print('Choosing numbers branch')
-                write_prompt_select_text(event.user_id)
-                r.set(event.user_id, 'writing a message')
-                r.set(str(event.user_id) + 'number', event.text)
+                if event.text in AVAILABLE_TEMPLATES:
+                    print('Choosing numbers branch')
+                    write_prompt_select_text(event.user_id)
+                    r.set(event.user_id, 'writing a message')
+                    r.set(str(event.user_id) + 'number', event.text)
+                else:
+                    write_hello_msg(event.user_id)
+                    r.delete(event.user_id)
+            
+            # User has chosen a meme template; now writes a phrase
             elif user_status == b'writing a message':
                 number = r.get(str(event.user_id) + 'number')
-                print("TRIED TO CREATE AN IMAGEs")
                 print(number)
                 # Generate a text and image
                 answer, image_path = handle_msg(event.text, number)
                 r.delete(event.user_id)
                 # Send a message back
                 write_msg(event.user_id, answer, image_path)
+
+            # Unknown user status
             else:
                 write_hello_msg(event.user_id)
                 r.delete(event.user_id)
