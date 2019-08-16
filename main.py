@@ -546,7 +546,7 @@ def show_numbers(user_id):
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
-                    'label': '0'
+                    'label': 'random'
                 }
             }
         ]
@@ -581,19 +581,19 @@ vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 
 def handle_msg(message, number=None):
-    if number == 0:
-        number = random.randint(1, 5)
+    if number == b"random":
+        number = np.random.choice([b"cool ok", b"poker face", b"poker face 2", b"really", b"hmmmm"])
 
     # Select a handler
-    if number == 1:
+    if number == b"cool ok":
         image_path = handle_ok(message)
-    elif number == 2:
+    elif number == b"poker face":
         image_path = handle_poker_face(message)
-    elif number == 3:
+    elif number == b"poker face 2":
         image_path = handle_poker_face_2(message)
-    elif number == 4:
+    elif number == b"really":
         image_path = handle_poker_face_3(message)
-    elif number == 5:
+    elif number == b"hmmmm":
         image_path = handle_me_only(message)
     elif message.lower() =='анекдот' or message.lower() == 'анек':
         data = pd.read_csv('data/anekdot_ru.csv')
@@ -633,9 +633,11 @@ for event in longpoll.listen():
                 print('Choosing numbers branch')
                 write_prompt_select_text(event.user_id)
                 r.set(event.user_id, 'writing a message')
-                r.set(str(event.user_id) + 'number', int(event.text))
+                r.set(str(event.user_id) + 'number', event.text)
             elif user_status == b'writing a message':
-                number = int(r.get(str(event.user_id) + 'number'))
+                number = r.get(str(event.user_id) + 'number')
+                print("TRIED TO CREATE AN IMAGEs")
+                print(number)
                 # Generate a text and image
                 answer, image_path = handle_msg(event.text, number)
                 r.delete(event.user_id)
