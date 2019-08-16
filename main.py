@@ -9,11 +9,12 @@ import numpy as np
 import pandas as pd
 import redis
 
+import keyboards
 from handle_images import handle_ok, handle_poker_face, handle_poker_face_2, handle_poker_face_3, handle_me_only
 
 FONT = 'fonts/arial.ttf'
 RESULT_IMAGE_PATH = 'img/result.jpg'
-AVAILABLE_TEMPLATES = ["cool ok", "poker face", "poker face 2", "really", "hmmmm"]
+AVAILABLE_TEMPLATES = ["cool ok", "poker face", "poker face 2", "really", "hmmmm", "random"]
 
 
 def write_msg(user_id, message, image_path):
@@ -26,26 +27,10 @@ def write_msg(user_id, message, image_path):
     # Send a message with photo
     result = vk.method('photos.saveMessagesPhoto', {'server': json_data['server'], 'photo': json_data['photo'], 'hash': json_data['hash']})
     
-    buttons = {}
-    buttons['one_time'] = True
-    buttons['buttons'] = []
-    buttons['buttons'].append([])
-    buttons['buttons'][0].append({})
-    buttons['buttons'][0][0]['action'] = {}
-    buttons['buttons'][0][0]['action']['type'] = 'text'
-    buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
-    buttons['buttons'][0][0]['action']['label'] = 'Создать картинку'
-    buttons['buttons'][0][0]['color'] = 'negative'
-    buttons['buttons'].append([])
-    buttons['buttons'][1].append({})
-    buttons['buttons'][1][0]['action'] = {}
-    buttons['buttons'][1][0]['action']['type'] = 'text'
-    buttons['buttons'][1][0]['action']['payload'] = "{\"button\": \"1\"}"
-    buttons['buttons'][1][0]['action']['label'] = 'Анекдот'
+    buttons = keyboards.initial_keyboard
 
     button_json = json.dumps(buttons)
 
-    button_json = json.dumps(buttons)
     vk.method('messages.send', {
         'user_id': user_id, 
         'message': '', 
@@ -56,22 +41,7 @@ def write_msg(user_id, message, image_path):
 
 
 def write_hello_msg(user_id):
-    buttons = {}
-    buttons['one_time'] = True
-    buttons['buttons'] = []
-    buttons['buttons'].append([])
-    buttons['buttons'][0].append({})
-    buttons['buttons'][0][0]['action'] = {}
-    buttons['buttons'][0][0]['action']['type'] = 'text'
-    buttons['buttons'][0][0]['action']['payload'] = "{\"button\": \"1\"}"
-    buttons['buttons'][0][0]['action']['label'] = 'Создать картинку'
-    buttons['buttons'][0][0]['color'] = 'negative'
-    buttons['buttons'].append([])
-    buttons['buttons'][1].append({})
-    buttons['buttons'][1][0]['action'] = {}
-    buttons['buttons'][1][0]['action']['type'] = 'text'
-    buttons['buttons'][1][0]['action']['payload'] = "{\"button\": \"1\"}"
-    buttons['buttons'][1][0]['action']['label'] = 'Анекдот'
+    buttons = keyboards.initial_keyboard
 
     button_json = json.dumps(buttons)
 
@@ -84,61 +54,7 @@ def write_hello_msg(user_id):
 
 
 def show_numbers(user_id):
-    buttons = {}
-    buttons['one_time'] = True
-    buttons['buttons'] = [
-        [
-            {
-                'action': {
-                    'type': 'text',
-                    'payload': "{\"button\": \"1\"}",
-                    'label': 'cool ok'
-                },
-                'color': 'negative'
-            },
-            {
-                'action': {
-                    'type': 'text',
-                    'payload': "{\"button\": \"1\"}",
-                    'label': 'poker face'
-                },
-                'color': 'negative'
-            },
-            {
-                'action': {
-                    'type': 'text',
-                    'payload': "{\"button\": \"1\"}",
-                    'label': 'poker face 2'
-                },
-                'color': 'negative'
-            }
-        ],
-        [
-            {
-                'action': {
-                    'type': 'text',
-                    'payload': "{\"button\": \"1\"}",
-                    'label': 'really'
-                },
-                'color': 'negative'
-            },
-            {
-                'action': {
-                    'type': 'text',
-                    'payload': "{\"button\": \"1\"}",
-                    'label': 'hmmmm'
-                },
-                'color': 'negative'
-            },
-            {
-                'action': {
-                    'type': 'text',
-                    'payload': "{\"button\": \"1\"}",
-                    'label': 'random'
-                }
-            }
-        ]
-    ]
+    buttons = keyboards.templates_keyboard;
 
     button_json = json.dumps(buttons)
 
