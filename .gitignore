@@ -9,3 +9,6 @@ __pycache__
 
 # OS X files
 .DS_Store
+
+# Redis files
+*.rdb
