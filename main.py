@@ -504,7 +504,7 @@ def show_numbers(user_id):
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
-                    'label': '1'
+                    'label': 'cool ok'
                 },
                 'color': 'negative'
             },
@@ -512,7 +512,7 @@ def show_numbers(user_id):
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
-                    'label': '2'
+                    'label': 'poker face'
                 },
                 'color': 'negative'
             },
@@ -520,7 +520,7 @@ def show_numbers(user_id):
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
-                    'label': '3'
+                    'label': 'poker face 2'
                 },
                 'color': 'negative'
             }
@@ -530,7 +530,7 @@ def show_numbers(user_id):
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
-                    'label': '4'
+                    'label': 'really'
                 },
                 'color': 'negative'
             },
@@ -538,7 +538,7 @@ def show_numbers(user_id):
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
-                    'label': '5'
+                    'label': 'hmmmm'
                 },
                 'color': 'negative'
             },
