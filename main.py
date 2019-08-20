@@ -67,7 +67,7 @@ def write_prompt_select_text(user_id):
     vk.method('messages.send', {
         'user_id': user_id, 
         'message': 'Теперь пиши свою фразу:',
-        'keyboard': json.dumps({}),
+        'keyboard': json.dumps(keyboards.cancel_only_keyboard),
         'random_id': random.randint(1, 9999)
     })
 
@@ -157,11 +157,16 @@ for event in longpoll.listen():
             elif user_status == b'writing a message':
                 number = r.get(str(event.user_id) + 'number')
                 print(number)
+                # If cancel step
+                if event.text == "Отменить":
+                    show_numbers(event.user_id)
+                    r.set(event.user_id, 'choosing numbers')
                 # Generate a text and image
-                answer, image_path = handle_msg(event.text, number)
-                r.delete(event.user_id)
-                # Send a message back
-                write_msg(event.user_id, answer, image_path)
+                else:
+                    answer, image_path = handle_msg(event.text, number)
+                    r.delete(event.user_id)
+                    # Send a message back
+                    write_msg(event.user_id, answer, image_path)
 
             # Unknown user status
             else:

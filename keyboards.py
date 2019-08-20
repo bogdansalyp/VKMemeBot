@@ -23,6 +23,21 @@ initial_keyboard = {
     ]
 }
 
+cancel_only_keyboard = {
+    'one_time': True,
+    'buttons': [
+        [
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': 'Отменить'
+                }
+            }
+        ]
+    ]
+}
+
 templates_keyboard = {
     'one_time': True,
     'buttons': [
