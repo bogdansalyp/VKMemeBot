@@ -1,6 +1,6 @@
 from PIL import Image, ImageFont, ImageDraw
 
-FONT = 'fonts/arial.ttf'
+from config import *
 
 def draw_watermark(image, watermark_text):
     draw = ImageDraw.Draw(image)

@@ -1,8 +1,7 @@
 from PIL import Image, ImageFont, ImageDraw
 from image_tools import draw_watermark
 
-FONT = 'fonts/arial.ttf'
-RESULT_IMAGE_PATH = 'img/result.jpg'
+from config import *
 
 
 def split_to_lines(message, symbols_to_fit):

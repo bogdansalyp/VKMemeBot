@@ -11,10 +11,7 @@ import redis
 
 import keyboards
 from handle_images import handle_ok, handle_poker_face, handle_poker_face_2, handle_poker_face_3, handle_me_only
-
-FONT = 'fonts/arial.ttf'
-RESULT_IMAGE_PATH = 'img/result.jpg'
-AVAILABLE_TEMPLATES = ["cool ok", "poker face", "poker face 2", "really", "hmmmm", "random"]
+from config import *
 
 
 def write_msg(user_id, message, image_path):
