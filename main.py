@@ -10,7 +10,7 @@ import pandas as pd
 import redis
 
 import keyboards
-from handle_images import handle_ok, handle_poker_face, handle_poker_face_2, handle_poker_face_3, handle_me_only
+import handle_images
 from config import *
 
 
@@ -87,21 +87,27 @@ def handle_msg(message, number=None):
 
     # Select a handler
     if number == b"cool ok":
-        image_path = handle_ok(message)
+        image_path = handle_images.handle_ok(message)
     elif number == b"poker face":
-        image_path = handle_poker_face(message)
+        image_path = handle_images.handle_poker_face(message)
     elif number == b"poker face 2":
-        image_path = handle_poker_face_2(message)
+        image_path = handle_images.handle_poker_face_2(message)
     elif number == b"really":
-        image_path = handle_poker_face_3(message)
+        image_path = handle_images.handle_poker_face_3(message)
     elif number == b"hmmmm":
-        image_path = handle_me_only(message)
+        image_path = handle_images.handle_me_only(message)
+    elif number == b"sladko":
+        image_path = handle_images.handle_sladko(message)
+    elif number == b"gorko":
+        image_path = handle_images.handle_gorko(message)
+    elif number == b"a pochemu":
+        image_path = handle_images.handle_pochemu(message)
     elif message.lower() =='анекдот' or message.lower() == 'анек':
         data = pd.read_csv('data/anekdot_ru.csv')
         message = np.random.choice(data['text'])
-        image_path = handle_ok(message)
+        image_path = handle_images.handle_ok(message)
     else:
-        image_path = handle_ok("начни сообщение с цифры до 5")
+        image_path = handle_images.handle_ok("начни сообщение с цифры до 5")
     return message, image_path
 
 print("Server started")

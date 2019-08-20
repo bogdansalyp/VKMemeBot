@@ -410,3 +410,240 @@ def handle_me_only(message):
     wert.resize((100, 100), Image.ANTIALIAS)
     wert.save(RESULT_IMAGE_PATH)
     return RESULT_IMAGE_PATH
+
+
+def handle_sladko(message):
+    original_image_path = 'img/sladko.jpg'
+    original_img = Image.open(original_image_path)
+
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 2)
+    whitespace_y = int(original_img.size[1] * 1.5)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = whitespace_y - original_img.size[1]
+    # new_position_y = 0
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
+    FONT_SIZES = [220, 200, 180, 150, 130, 100, 80, 60]
+    TEXT_MARGIN_RIGHT = 0.05
+    TEXT_MARGIN_TOP = 100
+
+    draw = ImageDraw.Draw(new_image)
+
+    text_position_x = int(whitespace_size[0] * 0.3)
+    text_position_y = TEXT_MARGIN_TOP
+
+    margin = whitespace_x * TEXT_MARGIN_RIGHT
+    
+    # Try to write text in one line
+    text_written = False
+    for font_size in FONT_SIZES:
+        font = ImageFont.truetype(FONT, font_size)
+        font_width = font.getsize(message)[0]
+        available_width = text_position_x - margin
+        if ((font_width < available_width) and not (text_written)):
+            draw.text((text_position_x, text_position_y), message, (0,0,0), font=font)
+            text_written = True
+            
+    # Write text multiline
+    if not text_written:
+        font = ImageFont.truetype(FONT, 60)
+        font_width = font.getsize(message)[0]
+        text_position_x = int(whitespace_size[0] * 0.05)
+        available_width = whitespace_x - (text_position_x + margin)
+        symbols_to_fit = 100
+        while(font.getsize('a'*symbols_to_fit)[0] > available_width):
+            symbols_to_fit -= 1
+
+        new_lines = split_to_lines(message, symbols_to_fit)
+
+        # Resize image
+        for line in new_lines:
+            whitespace_y += font.getsize('A')[1]
+            new_position_y += font.getsize('A')[1]
+        whitespace_y -= font.getsize('A')[1] * 5
+        new_position_y -= font.getsize('A')[1] * 5
+
+        whitespace_size = (whitespace_x, whitespace_y)
+        new_image = Image.new('RGB', whitespace_size, (255,255,255))
+        new_position = (new_position_x, new_position_y)
+        new_image.paste(original_img, new_position)
+        draw = ImageDraw.Draw(new_image)
+
+        # Write multiline
+        for line in new_lines:
+            draw.text((text_position_x, text_position_y), line, (0,0,0), font=font)
+            text_position_y += font.getsize('A')[1]
+
+    # Watermark
+    draw_watermark(new_image, 'vk.com/postironic_bot')
+
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
+    wert.resize((100, 100), Image.ANTIALIAS)
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
+
+
+def handle_gorko(message):
+    original_image_path = 'img/gorko.jpg'
+    original_img = Image.open(original_image_path)
+
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 2)
+    whitespace_y = int(original_img.size[1] * 1.5)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = whitespace_y - original_img.size[1]
+    # new_position_y = 0
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
+    FONT_SIZES = [220, 200, 180, 150, 130, 100, 80, 60]
+    TEXT_MARGIN_RIGHT = 0.05
+    TEXT_MARGIN_TOP = 100
+
+    draw = ImageDraw.Draw(new_image)
+
+    text_position_x = int(whitespace_size[0] * 0.3)
+    text_position_y = TEXT_MARGIN_TOP
+
+    margin = whitespace_x * TEXT_MARGIN_RIGHT
+    
+    # Try to write text in one line
+    text_written = False
+    for font_size in FONT_SIZES:
+        font = ImageFont.truetype(FONT, font_size)
+        font_width = font.getsize(message)[0]
+        available_width = text_position_x - margin
+        if ((font_width < available_width) and not (text_written)):
+            draw.text((text_position_x, text_position_y), message, (0,0,0), font=font)
+            text_written = True
+            
+    # Write text multiline
+    if not text_written:
+        font = ImageFont.truetype(FONT, 60)
+        font_width = font.getsize(message)[0]
+        text_position_x = int(whitespace_size[0] * 0.05)
+        available_width = whitespace_x - (text_position_x + margin)
+        symbols_to_fit = 100
+        while(font.getsize('a'*symbols_to_fit)[0] > available_width):
+            symbols_to_fit -= 1
+
+        new_lines = split_to_lines(message, symbols_to_fit)
+
+        # Resize image
+        for line in new_lines:
+            whitespace_y += font.getsize('A')[1]
+            new_position_y += font.getsize('A')[1]
+        whitespace_y -= font.getsize('A')[1] * 5
+        new_position_y -= font.getsize('A')[1] * 5
+
+        whitespace_size = (whitespace_x, whitespace_y)
+        new_image = Image.new('RGB', whitespace_size, (255,255,255))
+        new_position = (new_position_x, new_position_y)
+        new_image.paste(original_img, new_position)
+        draw = ImageDraw.Draw(new_image)
+
+        # Write multiline
+        for line in new_lines:
+            draw.text((text_position_x, text_position_y), line, (0,0,0), font=font)
+            text_position_y += font.getsize('A')[1]
+
+    # Watermark
+    draw_watermark(new_image, 'vk.com/postironic_bot')
+
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
+    wert.resize((100, 100), Image.ANTIALIAS)
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH
+
+
+def handle_pochemu(message):
+    original_image_path = 'img/pochemu.jpg'
+    original_img = Image.open(original_image_path)
+
+    # Rescale the image
+    whitespace_x = int(original_img.size[0] * 2)
+    whitespace_y = int(original_img.size[1] * 1.5)
+    whitespace_size = (whitespace_x, whitespace_y)
+    new_image = Image.new('RGB', whitespace_size, (255,255,255))
+    
+    # Position new image
+    new_position_x = int((whitespace_size[0] - original_img.size[0]) / 2.5)
+    new_position_y = whitespace_y - original_img.size[1]
+    # new_position_y = 0
+    new_position = (new_position_x, new_position_y)
+    new_image.paste(original_img, new_position)
+    
+    # Add text
+    FONT_SIZES = [220, 200, 180, 150, 130, 100, 80, 60]
+    TEXT_MARGIN_RIGHT = 0.05
+    TEXT_MARGIN_TOP = 100
+
+    draw = ImageDraw.Draw(new_image)
+
+    text_position_x = int(whitespace_size[0] * 0.3)
+    text_position_y = TEXT_MARGIN_TOP
+
+    margin = whitespace_x * TEXT_MARGIN_RIGHT
+    
+    # Try to write text in one line
+    text_written = False
+    for font_size in FONT_SIZES:
+        font = ImageFont.truetype(FONT, font_size)
+        font_width = font.getsize(message)[0]
+        available_width = text_position_x - margin
+        if ((font_width < available_width) and not (text_written)):
+            draw.text((text_position_x, text_position_y), message, (0,0,0), font=font)
+            text_written = True
+            
+    # Write text multiline
+    if not text_written:
+        font = ImageFont.truetype(FONT, 60)
+        font_width = font.getsize(message)[0]
+        text_position_x = int(whitespace_size[0] * 0.05)
+        available_width = whitespace_x - (text_position_x + margin)
+        symbols_to_fit = 100
+        while(font.getsize('a'*symbols_to_fit)[0] > available_width):
+            symbols_to_fit -= 1
+
+        new_lines = split_to_lines(message, symbols_to_fit)
+
+        # Resize image
+        for line in new_lines:
+            whitespace_y += font.getsize('A')[1]
+            new_position_y += font.getsize('A')[1]
+        whitespace_y -= font.getsize('A')[1] * 5
+        new_position_y -= font.getsize('A')[1] * 5
+
+        whitespace_size = (whitespace_x, whitespace_y)
+        new_image = Image.new('RGB', whitespace_size, (255,255,255))
+        new_position = (new_position_x, new_position_y)
+        new_image.paste(original_img, new_position)
+        draw = ImageDraw.Draw(new_image)
+
+        # Write multiline
+        for line in new_lines:
+            draw.text((text_position_x, text_position_y), line, (0,0,0), font=font)
+            text_position_y += font.getsize('A')[1]
+
+    # Watermark
+    draw_watermark(new_image, 'vk.com/postironic_bot')
+
+    # Resize an image
+    wert = new_image.resize((int(whitespace_size[0] / 4), int(whitespace_size[1] / 4)), Image.ANTIALIAS)
+    wert.resize((100, 100), Image.ANTIALIAS)
+    wert.save(RESULT_IMAGE_PATH)
+    return RESULT_IMAGE_PATH

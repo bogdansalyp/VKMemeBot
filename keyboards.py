@@ -73,6 +73,32 @@ templates_keyboard = {
                 'action': {
                     'type': 'text',
                     'payload': "{\"button\": \"1\"}",
+                    'label': 'a pochemu'
+                },
+                'color': 'negative'
+            }
+        ],
+        [
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': 'sladko'
+                },
+                'color': 'negative'
+            },
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
+                    'label': 'gorko'
+                },
+                'color': 'negative'
+            },
+            {
+                'action': {
+                    'type': 'text',
+                    'payload': "{\"button\": \"1\"}",
                     'label': 'random'
                 }
             }
