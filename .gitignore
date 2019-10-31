@@ -4,8 +4,9 @@ key.py
 # Result image
 img/result.jpg
 
-# Python cache files
+# Python files
 __pycache__
+venv
 
 # OS X files
 .DS_Store
