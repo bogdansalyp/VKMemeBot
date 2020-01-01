@@ -1,0 +1,7 @@
+version: '3'
+services:
+  node-app:
+    restart: on-failure
+    build: .
+  redis:
+    image: 'redis:alpine'
