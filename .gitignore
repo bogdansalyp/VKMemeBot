@@ -13,3 +13,6 @@ venv
 
 # Redis files
 *.rdb
+
+# IDE
+.vscode
